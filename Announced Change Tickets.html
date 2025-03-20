@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- My attempt to update a table dynamically using the FetchDataForUser script include
+    There was an initial thought to make it look nice and use some of the other themes in the sytem
+    but I got it basically pulling the data and found a solution for the problem I was having.
+    I still wouldnt mind trying to get this to work ill come back to this at some point
+--> 
+<j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
+<html>
+<head>
+  <script type="text/javascript">
+    function fetchData() {
+      // Create a GlideAjax object and specify the Script Include
+      var ga = new GlideAjax('FetchDataForUser');
+      ga.addParam('sysparm_name', 'getRecords');
+      
+      // Send the request and handle the response
+      ga.getXMLAnswer(function(response) {
+        console.log('Raw Response:', response); // Log the raw response
+        if (response) {
+          try {
+            console.log("Here we go");
+            console.log(response); // Debugging statement to verify data
+            // Parse the JSON response
+            var result = JSON.parse(response);
+            console.log(result); // Debugging statement to verify data
+            console.log("It might have parsed the results");
+            // Get the table element by its ID
+            if (Array.isArray(result)) {
+              var table = document.getElementById('dataTable');
+              console.log("datatabletime");
+              // Iterate through the result array and create rows and cells
+              result.forEach(function(record) {
+                console.log("record object maybe: ", record);
+                var row = table.insertRow();
+                var cellNumber = row.insertCell();
+                //var cellArea = row.insertCell();
+                var cellCategory = row.insertCell();
+                cellNumber.innerHTML = record.number + " Number";
+                 //cellArea.innerHTML = record.area + " Area";
+                cellCategory.innerHTML = record.category + " Category";
+              });
+            } else {  
+              console.log('Result is not an array or is empty.');
+            }
+          } catch (error) {
+            console.log("Shits fucked");
+            console.error('Error parsing response:', error);
+            console.log('Raw response:', response);
+          }
+        } else {
+          console.error('No response received or response is null.');
+        }
+      });
+    }
+
+    function addStaticData() {
+      // Get the table element by its ID
+      var table = document.getElementById('dataTable');
+      
+      // Add a static row
+      var row = table.insertRow();
+      var cellNumber = row.insertCell();
+      //var cellArea = row.insertCell();
+      var cellCategory = row.insertCell();
+      cellNumber.innerHTML = "CHG0001234";
+      //cellArea.innerHTML = "IT";
+      cellCategory.innerHTML = "Network";
+    }
+
+    // Call fetchData function when the page loads
+    window.onload = function() {
+      fetchData();
+      addStaticData();
+    }
+  </script>
+</head>
+<body>
+  <!-- HTML table with a header row -->
+  <table id="dataTable" border="1">
+    <tr>
+      <th>Number</th>
+      <th>Category</th>
+    </tr>
+  </table>
+</body>
+</html>
+</j:jelly>
