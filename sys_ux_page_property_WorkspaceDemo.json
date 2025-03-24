@@ -1,0 +1,24 @@
+{
+    "contextual": [
+      "record"
+     ],
+    "newTabMenu": [
+      {
+        "label": {
+          "translatable": true,
+          "message": "New iRecord"
+        },
+        "routeInfo": {
+          "route": "record",
+          "fields": {
+            "table": "incident",
+            "sysId": "-1"
+          },
+          "multiInstField": "sysId"
+        }
+      }
+    ],
+    "maxMainTabLimit": 10,
+    "maxTotalSubTabLimit": 30
+  }
+  
