@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<unload unload_date="2025-03-28 00:38:33">
+<unload unload_date="2025-03-28 01:50:28">
 <sys_script action="INSERT_OR_UPDATE">
 <abort_action>false</abort_action>
 <access>package_private</access>
@@ -50,7 +50,8 @@ function restrictIncidents() {
 		}
 			
 		var u = gs.getUserID();
-		current.addQuery("caller_id", u).addOrCondition("opened_by", u).addOrCondition("watch_list", "CONTAINS", u).addOrCondition('caller_id.location', u);
+		var l = gs.getUser();
+		current.addQuery("caller_id", u).addOrCondition("opened_by", u).addOrCondition("watch_list", "CONTAINS", u).addOrCondition('caller_id.location', l.getLocation()).addOrCondition('location', l.getLocation());
 	}
 }]]></script>
 <sys_class_name>sys_script</sys_class_name>
@@ -59,7 +60,7 @@ function restrictIncidents() {
 <sys_domain>global</sys_domain>
 <sys_domain_path/>
 <sys_id>2bc2f9b1c0a801640199f9eb0067326e</sys_id>
-<sys_mod_count>56</sys_mod_count>
+<sys_mod_count>58</sys_mod_count>
 <sys_name>incident query</sys_name>
 <sys_overrides display_value=""/>
 <sys_package display_value="System (apps/system1)" source="apps/system1">31f270203c31311068bcf327dfe37f9b</sys_package>
@@ -67,7 +68,7 @@ function restrictIncidents() {
 <sys_scope display_value="Global">global</sys_scope>
 <sys_update_name>sys_script_2bc2f9b1c0a801640199f9eb0067326e</sys_update_name>
 <sys_updated_by>admin</sys_updated_by>
-<sys_updated_on>2025-03-28 00:37:57</sys_updated_on>
+<sys_updated_on>2025-03-28 01:30:52</sys_updated_on>
 <template/>
 <when>before</when>
 </sys_script>

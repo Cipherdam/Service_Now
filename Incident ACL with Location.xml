@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<unload unload_date="2025-03-28 01:56:48">
+<sys_security_acl action="INSERT_OR_UPDATE">
+<active>true</active>
+<admin_overrides>true</admin_overrides>
+<advanced>true</advanced>
+<condition table="incident"/>
+<description>You can read an incident if you opened it, are the caller of record, or are on the watch list
+
+Added location of the caller and the location of the record to the allow list.</description>
+<local_or_existing>Local</local_or_existing>
+<name>incident</name>
+<operation display_value="read">read</operation>
+<script><![CDATA[current.opened_by == gs.getUserID() || current.caller_id == gs.getUserID() || current.watch_list.indexOf(gs.getUserID()) > -1 || current.location == gs.getUser().getLocation() || current.caller_id.location == getUser().getLocation();]]></script>
+<security_attribute display_value=""/>
+<sys_class_name>sys_security_acl</sys_class_name>
+<sys_created_by>myla.jordan</sys_created_by>
+<sys_created_on>2011-04-22 14:36:13</sys_created_on>
+<sys_id>7da3bda1c0a801667dc88c1e9527f776</sys_id>
+<sys_mod_count>16</sys_mod_count>
+<sys_name>incident</sys_name>
+<sys_package display_value="High Security Settings" source="com.glide.high_security">a757b8a83cb1311068bcf327dfe37f58</sys_package>
+<sys_policy/>
+<sys_scope display_value="Global">global</sys_scope>
+<sys_update_name>sys_security_acl_7da3bda1c0a801667dc88c1e9527f776</sys_update_name>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2025-03-28 01:44:21</sys_updated_on>
+<type display_value="record">record</type>
+</sys_security_acl>
+</unload>
