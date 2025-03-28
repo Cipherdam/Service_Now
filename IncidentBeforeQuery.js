@@ -30,11 +30,13 @@
  current.addQuery("caller_id", u).addOrCondition("opened_by", u).addOrCondition("watch_list", "CONTAINS", u);
 
 To this:
- current.addQuery("caller_id", u).addOrCondition("opened_by", u).addOrCondition("watch_list", "CONTAINS", u).addOrCondition('caller_id.location', u);
-
+ 		var u = gs.getUserID();
+		var l = gs.getUser();
+		current.addQuery("caller_id", u).addOrCondition("opened_by", u).addOrCondition("watch_list", "CONTAINS", u).addOrCondition('caller_id.location', l.getLocation()).addOrCondition('location', l.getLocation());
+	
 
  Opened_by.location might be a useful add
-
+TODO: See if 'u' is necessary
 
  */
 
