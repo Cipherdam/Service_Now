@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<unload unload_date="2025-03-28 00:38:33">
+<sys_script action="INSERT_OR_UPDATE">
+<abort_action>false</abort_action>
+<access>package_private</access>
+<action_delete>false</action_delete>
+<action_insert>false</action_insert>
+<action_query>true</action_query>
+<action_update>false</action_update>
+<active>true</active>
+<add_message>false</add_message>
+<advanced>true</advanced>
+<change_fields>false</change_fields>
+<client_callable>false</client_callable>
+<collection>incident</collection>
+<condition/>
+<description/>
+<execute_function>false</execute_function>
+<filter_condition table="incident"/>
+<is_rest>false</is_rest>
+<message/>
+<name>incident query</name>
+<order>100</order>
+<priority/>
+<rest_method display_value=""/>
+<rest_method_text/>
+<rest_service display_value=""/>
+<rest_service_text/>
+<rest_variables/>
+<role_conditions/>
+<script><![CDATA[restrictIncidents();
+function restrictIncidents() {
+	if (!gs.hasRole("itil") && !gs.hasRole("sn_incident_read") && gs.isInteractive()) {
+		//Do NOT restrict Incidents if SPM premium plugin is active AND user has the service_viewer role.
+		if (GlidePluginManager.isActive('com.snc.spm') && gs.hasRole('service_viewer'))
+            return;
+		if (GlidePluginManager.isActive('sn_fsm_itsm_mng') && gs.hasRole('wm_ext_agent'))
+            return;
+		// STRY52118544: ham_user is added to support incident read for reporting on HAM store app
+		if (GlidePluginManager.isActive('com.sn_hamp') && gs.hasRole('sn_hamp.ham_user')) {
+			return;
+		}
+		// DEF0330091: Allow query on OT Incident with sn_ot_incident_read role
+		if (GlidePluginManager.isActive('com.sn_ot_inc_mgmt') && gs.hasRole("sn_ot_incident_read"))
+			return;
+
+		// Responders should be able to access all incidents 
+		if (gs.hasRole("sn_sow_srm.srm_responder")) {
+			return;
+		}
+			
+		var u = gs.getUserID();
+		current.addQuery("caller_id", u).addOrCondition("opened_by", u).addOrCondition("watch_list", "CONTAINS", u).addOrCondition('caller_id.location', u);
+	}
+}]]></script>
+<sys_class_name>sys_script</sys_class_name>
+<sys_created_by>fred.luddy</sys_created_by>
+<sys_created_on>2005-02-19 17:56:00</sys_created_on>
+<sys_domain>global</sys_domain>
+<sys_domain_path/>
+<sys_id>2bc2f9b1c0a801640199f9eb0067326e</sys_id>
+<sys_mod_count>56</sys_mod_count>
+<sys_name>incident query</sys_name>
+<sys_overrides display_value=""/>
+<sys_package display_value="System (apps/system1)" source="apps/system1">31f270203c31311068bcf327dfe37f9b</sys_package>
+<sys_policy/>
+<sys_scope display_value="Global">global</sys_scope>
+<sys_update_name>sys_script_2bc2f9b1c0a801640199f9eb0067326e</sys_update_name>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2025-03-28 00:37:57</sys_updated_on>
+<template/>
+<when>before</when>
+</sys_script>
+<sn_kmf_record_signature action="INSERT_OR_UPDATE">
+<certificate_alias display_value="code_signing_key_sandiego_publiccodesignver">1844241ec2c57afb8739f5110ca16bf3</certificate_alias>
+<document_id>2bc2f9b1c0a801640199f9eb0067326e</document_id>
+<field_list>active,collection,order,sys_class_name,client_callable,condition,action_insert,rest_method_text,rest_service_text,script,when</field_list>
+<is_attachment>false</is_attachment>
+<purpose display_value="">wild_card_purpose</purpose>
+<signature>GcvIT71m3kDhvlh3+FgjRwSaurL/uALsva9jGRztcF5OBYqhdqESVz3Yyjs19ewtHHz/YScW7S+GXf5CLEkkzuBfml5NFUJovytrNRrAI7aWO3b6u/weIMxKMJv6S7rDmxV8vMptP+kuk3QrSSCkd4D9Rckdt57RgOaXxBCY5tpKTbCXxEKhyytoScF3tWFZ+0J7VJrU2mgnNWCxrd4WlU2e9va7VDhpZY4HP8wrvBvNha0eS2PldsBPfTLWpLgObyufZXYNfN17MnMtbhVb6Zaf5KQrQId67bF7lm7ZuN7WLm0A0+5RWf2tuTOFQmaXB0a212XAr8ZhgtJG2UDgnA==</signature>
+<signature_algorithm>SHA512withRSA</signature_algorithm>
+<signature_timestamp/>
+<sys_class_name>sn_kmf_record_signature</sys_class_name>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2023-10-06 17:00:42</sys_created_on>
+<sys_id>4583e9a8b87785970c3a220210c0d9cc</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_name/>
+<sys_package display_value="">1ccadd4ccfd72010ffa1acc9e4cfcd7b</sys_package>
+<sys_policy>protected</sys_policy>
+<sys_scope display_value="Global">global</sys_scope>
+<sys_update_name>sn_kmf_record_signature_4583e9a8b87785970c3a220210c0d9cc</sys_update_name>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2023-10-06 17:00:42</sys_updated_on>
+<table_name>sys_script</table_name>
+<validation_params/>
+</sn_kmf_record_signature>
+<sn_kmf_record_signature action="INSERT_OR_UPDATE">
+<certificate_alias display_value="code_signing_key_vancouver_pki_publiccodesignver">ce7ad863b702211090d89d2bee11a95f</certificate_alias>
+<document_id>2bc2f9b1c0a801640199f9eb0067326e</document_id>
+<field_list>active,collection,order,sys_class_name,client_callable,condition,action_insert,rest_method_text,rest_service_text,script,when</field_list>
+<is_attachment>false</is_attachment>
+<purpose display_value="">wild_card_purpose</purpose>
+<signature>fuxB6p9JadriPl9+1iKJvJAgQN8ZBxU48QSpRgyfiQ+n3bOk/qOeKzKS/jet5a41j7tenFf4f2CgGumvVNA8ZRvZYSL+lORur550cLrnibLP1ih+nSkGzZbBdJLXRPpAbJWbewtRqUVVABVew1Lxm+Ln+e9WdZq0QWaCAjqsxsZPjOkWZmNzO7MtNrOZgalhWk2oe5rn0SZF1Lt7Mt5/nyFeX477vTiEIIhvcmClYfrtrU5RAlzcxi7a7eq3KphQQuRRlEFY5ImVi6owIf3gUdA+teMLtS9+WI2FhBTrU3QLvjukOXP5yc+j1YrJdPktzPiNBhRyKmFgz3YuAmEe2n3OQqhtaKIXHQEGKtqNKaWumnAaen4lvhH6qRHo9p4bdy8NEjkG0JVfEYzC7J33t6DEMngIk/zLj0srThD/VMIa2x4Yq4G8qG3jObApf7ZZZ8hSQPDsFTpNnOcdMZn+hA9xFj7lLRNd95LcXxXL01rBFz8ai2AW95q1pv7/E6FjVsuW/7FZ2kqR7Vq6jFy8vYuk33QfIOesuDhVC9JhSqgXtTBghywyDYvIxNg8Q9KkclHH9o11C0gGDcfw4/zg3RTUG/ZKHeurh8+/9HkJGBIx7zprZOKvU1cyY0Wo41hpXXEPHe1KAq8Q5fwQizWNpeFzHYGEOyH4kBqWfWV16Vw=</signature>
+<signature_algorithm>SHA512withRSA</signature_algorithm>
+<signature_timestamp/>
+<sys_class_name>sn_kmf_record_signature</sys_class_name>
+<sys_created_by>system</sys_created_by>
+<sys_created_on>2024-01-26 17:43:10</sys_created_on>
+<sys_id>5e6ca6123789430a9389d01ccd56b6b1</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_name/>
+<sys_package display_value="">1ccadd4ccfd72010ffa1acc9e4cfcd7b</sys_package>
+<sys_policy>protected</sys_policy>
+<sys_scope display_value="Global">global</sys_scope>
+<sys_update_name>sn_kmf_record_signature_5e6ca6123789430a9389d01ccd56b6b1</sys_update_name>
+<sys_updated_by>system</sys_updated_by>
+<sys_updated_on>2024-01-26 17:43:10</sys_updated_on>
+<table_name>sys_script</table_name>
+<validation_params/>
+</sn_kmf_record_signature>
+</unload>
