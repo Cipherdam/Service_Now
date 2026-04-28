@@ -1,0 +1,7 @@
+var gr = new GlideRecord("change_request");
+gr.addQuery("sys_id", "<Change Request SysID>");
+gr.query();
+if (gr.next()) {
+new Workflow().restartWorkflow(gr);
+
+}
